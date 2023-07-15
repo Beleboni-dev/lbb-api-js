@@ -1,6 +1,6 @@
-import express, { json } from "express";
+import express from "express";
 import { userRoutes } from "./api/routes/UserRoutes.js";
-import cors from "cors";
+import cors from 'cors'
 import connectDB from "./db.js";
 const app = express();
 
@@ -9,16 +9,13 @@ app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
-// Configurar o cabeçalho 'Access-Control-Allow-Origin' para permitir conexões de qualquer origem
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
-app.use(json());
-app.use(cors());
+app.use(express.json());
 app.get("/", (req, res) => {
   res.send("API funcionando");
 });
